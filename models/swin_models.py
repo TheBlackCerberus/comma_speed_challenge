@@ -26,13 +26,13 @@ class SpeedEstimatorSwin(nn.Module):
         
         # MLP regression head
         self.regressor = nn.Sequential(
-            nn.Linear(hidden_size, 256),
+            nn.Linear(hidden_size, 512),
             nn.ReLU(),
             nn.Dropout(0.2),
-            nn.Linear(256, 64),
+            nn.Linear(512, 128),
             nn.ReLU(),
             nn.Dropout(0.2),
-            nn.Linear(64, 1)
+            nn.Linear(128, 1)
         )
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -107,13 +107,13 @@ class SpeedEstimatorSwinOpticalFlow(nn.Module):
         
         # MLP regression head
         self.regressor = nn.Sequential(
-            nn.Linear(fusion_input_size, 256),
+            nn.Linear(fusion_input_size, 512),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(256, 64),
+            nn.Linear(512, 128),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(64, 1)
+            nn.Linear(128, 1)
         )
     
     def forward(self, rgb_frames: torch.Tensor, flow_frames: torch.Tensor) -> torch.Tensor:
