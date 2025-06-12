@@ -1,0 +1,27 @@
+model_type: "swin_flow"
+model_config:
+  num_frames: 8
+  rgb_model_name: "microsoft/swinv2-tiny-patch4-window8-256"
+  flow_model_name: "microsoft/swinv2-tiny-patch4-window8-256"
+  fusion_method: "concat"
+  freeze_backbone: true
+
+data:
+  video_path: "/mnt/persistent-data/speedchallenge-master/data/train.mp4"
+  speed_file: "/mnt/persistent-data/speedchallenge-master/data/train.txt"
+  frame_size: 256
+  train_ratio: 0.6
+  val_ratio: 0.2
+
+training:
+  batch_size: 6
+  num_workers: 4
+  num_epochs: 10
+  learning_rate: 0.0001
+  save_dir: "checkpoints"
+  save_best_only: true
+
+wandb:
+  project_name: "speed-estimation"
+  run_name: null
+  enable: true 

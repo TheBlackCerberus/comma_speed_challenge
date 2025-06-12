@@ -1,0 +1,9 @@
+wandb/
+venv/
+.mypy_cache/
+.pytest_cache/
+notebooks/
+.env
+__pycache__/
+checkpoints/
+data/
