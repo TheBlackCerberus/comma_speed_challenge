@@ -1,11 +1,10 @@
 import pytest
 import torch
-from typing import Dict
 from models.swin_models import SpeedEstimatorSwinOpticalFlow
 
 
 @pytest.fixture
-def model_params() -> Dict[str, int]:
+def model_params() -> dict[str, int]:
     return {
         "batch_size": 2,
         "num_frames": 8,
@@ -16,7 +15,7 @@ def model_params() -> Dict[str, int]:
 
 
 @pytest.fixture
-def swin_flow_model(model_params: Dict[str, int]) -> SpeedEstimatorSwinOpticalFlow:
+def swin_flow_model(model_params: dict[str, int]) -> SpeedEstimatorSwinOpticalFlow:
     """Create a SpeedEstimatorSwinOpticalFlow model fixture with default fusion method"""
     model = SpeedEstimatorSwinOpticalFlow(num_frames=model_params["num_frames"], fusion_method='concat')
     model.eval() 
@@ -40,7 +39,7 @@ def test_backbone_config(swin_flow_model: SpeedEstimatorSwinOpticalFlow) -> None
     assert swin_flow_model.rgb_hidden_size == swin_flow_model.flow_hidden_size
 
 
-def test_forward_pass(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: Dict[str, int]) -> None:
+def test_forward_pass(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: dict[str, int]) -> None:
     """Test the forward pass of the model"""
     # Create dummy inputs
     rgb_frames: torch.Tensor = torch.randn(
@@ -71,7 +70,7 @@ def test_forward_pass(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_para
 
 
 @pytest.mark.parametrize("fusion_method", ["concat", "add"])
-def test_fusion_methods(model_params: Dict[str, int], fusion_method: str) -> None:
+def test_fusion_methods(model_params: dict[str, int], fusion_method: str) -> None:
     """Test different fusion methods"""
     model: SpeedEstimatorSwinOpticalFlow = SpeedEstimatorSwinOpticalFlow(
         num_frames=model_params["num_frames"],
@@ -101,7 +100,7 @@ def test_fusion_methods(model_params: Dict[str, int], fusion_method: str) -> Non
     assert output.shape == (model_params["batch_size"], 1)
 
 
-def test_different_batch_sizes(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: Dict[str, int]) -> None:
+def test_different_batch_sizes(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: dict[str, int]) -> None:
     """Test the model with different batch sizes"""
     batch_sizes: list[int] = [1, 4, 8]
     
@@ -131,7 +130,7 @@ def test_different_batch_sizes(swin_flow_model: SpeedEstimatorSwinOpticalFlow, m
         assert output.shape == (batch_size, 1)
 
 
-def test_process_stream_method(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: Dict[str, int]) -> None:
+def test_process_stream_method(swin_flow_model: SpeedEstimatorSwinOpticalFlow, model_params: dict[str, int]) -> None:
     """Test the internal _process_stream method"""
     
 

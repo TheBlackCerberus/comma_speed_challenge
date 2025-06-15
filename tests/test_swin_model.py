@@ -1,11 +1,10 @@
 import pytest
 import torch
-from typing import Dict
 from models.swin_models import SpeedEstimatorSwin
 
 
 @pytest.fixture
-def model_params() -> Dict[str, int]:
+def model_params() -> dict[str, int]:
     """Test parameters for the model"""
     return {
         "batch_size": 2,
@@ -17,7 +16,7 @@ def model_params() -> Dict[str, int]:
 
 
 @pytest.fixture
-def swin_model(model_params: Dict[str, int]) -> SpeedEstimatorSwin:
+def swin_model(model_params: dict[str, int]) -> SpeedEstimatorSwin:
     """Create a SpeedEstimatorSwin model fixture"""
     model = SpeedEstimatorSwin(num_frames=model_params["num_frames"])
     model.eval() 
@@ -38,7 +37,7 @@ def test_model_backbone_config(swin_model: SpeedEstimatorSwin) -> None:
     assert hasattr(swin_model.backbone.config, "num_frames")
 
 
-def test_forward_pass(swin_model: SpeedEstimatorSwin, model_params: Dict[str, int]) -> None:
+def test_forward_pass(swin_model: SpeedEstimatorSwin, model_params: dict[str, int]) -> None:
     """Test the forward pass of the model"""
     dummy_input: torch.Tensor = torch.randn(
         model_params["batch_size"],
@@ -55,7 +54,7 @@ def test_forward_pass(swin_model: SpeedEstimatorSwin, model_params: Dict[str, in
     assert torch.all(torch.isfinite(output))
 
 
-def test_different_batch_sizes(swin_model: SpeedEstimatorSwin, model_params: Dict[str, int]) -> None:
+def test_different_batch_sizes(swin_model: SpeedEstimatorSwin, model_params: dict[str, int]) -> None:
     """Test the model with different batch sizes"""
     batch_sizes: list[int] = [1, 4, 8]
     
@@ -74,7 +73,7 @@ def test_different_batch_sizes(swin_model: SpeedEstimatorSwin, model_params: Dic
         assert test_output.shape == (batch_size, 1)
 
 
-def test_different_frame_counts(model_params: Dict[str, int]) -> None:
+def test_different_frame_counts(model_params: dict[str, int]) -> None:
     """Test the model with different numbers of frames"""
     frame_counts: list[int] = [4, 16]
     

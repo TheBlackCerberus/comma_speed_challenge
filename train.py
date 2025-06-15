@@ -6,7 +6,7 @@ import argparse
 import os
 from datetime import datetime
 from torch.utils.data import DataLoader, Subset
-from typing import Dict, Any
+from typing import Any
 
 from datasets.speed_dataset import SpeedDataset
 from datasets.speed_flow_dataset import SpeedDatasetWithFlow
@@ -19,7 +19,7 @@ def train_model(
     model: nn.Module, 
     train_loader: DataLoader, 
     val_loader: DataLoader, 
-    config: Dict[str, Any], 
+    config: dict[str, Any], 
     device: str = 'cuda'
 ) -> None:
     model = model.to(device)
@@ -93,7 +93,7 @@ def train_dual_stream_model(
     model: SpeedEstimatorSwinOpticalFlow, 
     train_loader: DataLoader, 
     val_loader: DataLoader, 
-    config: Dict[str, Any], 
+    config: dict[str, Any], 
     device: str = 'cuda'
 ) -> None:
     model = model.to(device)
@@ -177,7 +177,7 @@ def main() -> None:
     
     args = parser.parse_args()
     
-    config: Dict[str, Any] = load_config(args.config)
+    config: dict[str, Any] = load_config(args.config)
     
     timestamp: str = datetime.now().strftime("%Y%m%d_%H%M%S")
     experiment_id: str = f"{config['model_type']}_{timestamp}"

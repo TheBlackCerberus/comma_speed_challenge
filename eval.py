@@ -3,7 +3,7 @@ import torch.nn as nn
 from tqdm import tqdm
 import argparse
 from torch.utils.data import DataLoader, Subset
-from typing import Dict, Any, List, Tuple
+from typing import Any
 
 from datasets.speed_dataset import SpeedDataset
 from datasets.speed_flow_dataset import SpeedDatasetWithFlow
@@ -16,14 +16,14 @@ def evaluate_model(
     model: nn.Module,
     test_loader: DataLoader,
     device: str = 'cuda'
-) -> Tuple[float, List[float], List[float]]:
+) -> tuple[float, list[float], list[float]]:
     model = model.to(device)
     model.eval()
     
     criterion = nn.MSELoss()
     total_loss: float = 0.0
-    all_predictions: List[float] = []
-    all_targets: List[float] = []
+    all_predictions: list[float] = []
+    all_targets: list[float] = []
     
     with torch.no_grad():
         for frames, speeds in tqdm(test_loader, desc='Evaluating'):
@@ -43,14 +43,14 @@ def evaluate_dual_stream_model(
     model: SpeedEstimatorSwinOpticalFlow,
     test_loader: DataLoader,
     device: str = 'cuda'
-) -> Tuple[float, List[float], List[float]]:
+) -> tuple[float, list[float], list[float]]:
     model = model.to(device)
     model.eval()
     
     criterion = nn.MSELoss()
     total_loss: float = 0.0
-    all_predictions: List[float] = []
-    all_targets: List[float] = []
+    all_predictions: list[float] = []
+    all_targets: list[float] = []
     
     with torch.no_grad():
         for (rgb_frames, flow_frames), speeds in tqdm(test_loader, desc='Evaluating'):
@@ -78,7 +78,7 @@ def main() -> None:
     
     args = parser.parse_args()
     
-    config: Dict[str, Any] = load_config(args.config)
+    config: dict[str, Any] = load_config(args.config)
     
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")

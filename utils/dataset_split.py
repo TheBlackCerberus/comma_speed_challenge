@@ -1,12 +1,11 @@
 from torch.utils.data import Dataset
-from typing import Tuple, List
 
 
 def create_train_val_test_split(
     dataset: Dataset, 
     train_ratio: float = 0.6, 
     val_ratio: float = 0.2
-) -> Tuple[List[int], List[int], List[int]]:
+) -> tuple[list[int], list[int], list[int]]:
     
     dataset_size = len(dataset)
     indices = list(range(dataset_size))
