@@ -5,5 +5,12 @@ venv/
 notebooks/
 .env
 __pycache__/
-checkpoints/
-data/
+
+checkpoints/*
+!checkpoints/SwinTransformerV2-flow-8-epochs.pth
+!checkpoints/TImesFormer-8-epochs.pth
+ 
+data/*
+!data/train.txt
+!data/train.mp4
+!data/first_30_seconds.mp4
