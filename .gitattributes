@@ -1,0 +1,7 @@
+# Specific model files
+checkpoints/SwinTransformerV2-flow-8-epochs.pth filter=lfs diff=lfs merge=lfs -text
+checkpoints/TImesFormer-8-epochs.pth filter=lfs diff=lfs merge=lfs -text
+
+# Specific data files
+data/train.mp4 filter=lfs diff=lfs merge=lfs -text
+data/first_30_seconds.mp4 filter=lfs diff=lfs merge=lfs -text 
