@@ -1,4 +1,3 @@
-
 Welcome to the comma.ai Programming Challenge!
 ======
 
@@ -45,6 +44,18 @@ Setup: NVIDIA T4 GPU
 Test MSE: ~8.2 (evaluated on test split from the original training video and labels using 60/20/20 split)
 
 PS: The training only went up to 8 epochs and approximately 5 hours... spot GPUs are quite cheap, but not free, so I could do better but settled for good. (The numbers could be different on the real test set though.)
+
+## Usage
+
+### Training
+```bash
+python train --config config/swin_flow.yaml
+```
+
+### Evaluation
+```bash
+python eval.py --config config/swin_flow.yaml --checkpoint checkpoints/SwinTransformerV2-flow-8-epochs.pth
+```
 
 ## Analysis
 While it was expected that optical flow would improve performance - motion features are directly relevant to speed estimation - I wanted to quantify how significant this difference would be. The results show a substantial gap: the pure vision transformer struggles to generalize despite having access to the same temporal information.
